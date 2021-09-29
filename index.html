@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <mea charset="UTF-8">
-            <h1>TEST PAGE</h1>
-    </head>
-    <iframe id="showcase" width="740" height="480" src="/Matterport/bundle/showcase.html?m=e6E5godtfNv" frameborder=”0” allowfullscreen allow="vr"'>
-    </iframe>
-    <iframe width='900' height='700' src='https://mpembed.com/show/?m=e6E5godtfNv&minimap=1&hdir=2&background_color=grey&details=1&minimap=1&mdir=1&mt=1&hdir=2&image=https://test-nadia.sakura.ne.jp/mixa/ndv_logo_wh.png&loadinglogo=https://test-nadia.sakura.ne.jp/mixa/ndv_logo_wh.png&help=2' frameborder='0' allowfullscreen allow='xr-spatial-tracking'>
+
+<head>
+  <h1>URLパラメータによる追加機能の違い</h1>
+  <script src='https://static.matterport.com/showcase-sdk/latest.js'></script>
+</head>
+<h2>help表示なし</h2>
+<body>
+  <iframe width="853" height="480"
+    src="https://my.matterport.com/show?m=e6E5godtfNv&play=1&applicationKey=954gmts0bwg98bnqyt8w3u46a" frameborder="0"
+    allow="fullscreen; vr" id="showcase-iframe">
+  </iframe>
+  <h2>help表示</h2>
+  <iframe width="853" height="480"
+  src="https://my.matterport.com/show?m=e6E5godtfNv&help=1&play=1&applicationKey=954gmts0bwg98bnqyt8w3u46a" frameborder="0"
+  allow="fullscreen; vr" id="showcase-iframe">
 </iframe>
-    </body>
+  <h2>help表示２</h2>
+  <iframe width="853" height="480"
+  src="https://my.matterport.com/show?m=e6E5godtfNv&help=2&play=1&applicationKey=954gmts0bwg98bnqyt8w3u46a" frameborder="0"
+  allow="fullscreen; vr" id="showcase-iframe">
+</iframe>
+</iframe>
+<h2>MPEmbedパラメータ無料フル</h2>
+<iframe width="853" height="480"
+src="https://mpembed.com/show/?m=e6E5godtfNv&minimap=1&hdir=2&background_color=grey&details=1&minimap=1&mdir=1&mt=1&hdir=2&image=https://test-nadia.sakura.ne.jp/mixa/ndv_logo_wh.png&loadinglogo=https://test-nadia.sakura.ne.jp/mixa/ndv_logo_wh.png&applicationKey=954gmts0bwg98bnqyt8w3u46a" frameborder="0"
+allow="fullscreen; vr" id="showcase-iframe">
+</iframe>
+
+  <script>
+    (async function connectSdk() {
+      const sdkKey = '954gmts0bwg98bnqyt8w3u46a' // TODO: replace with your sdk key
+      const iframe = document.getElementById('showcase-iframe');
+
+      // connect the sdk; log an error and stop if there were any connection issues
+      try {
+        const mpSdk = await window.MP_SDK.connect(
+          iframe, // Obtained earlier
+          sdkKey, // Your SDK key
+          '' // Unused but needs to be a valid string
+        );
+        onShowcaseConnect(mpSdk);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+
+    async function onShowcaseConnect(mpSdk) {
+      // insert your sdk code here. See the ref https://matterport.github.io/showcase-sdk//docs/sdk/reference/current/index.html
+
+      // try retrieving the model data and log the model's sid
+      try {
+        const modelData = await mpSdk.Model.getData();
+        console.log('Model sid:' + modelData.sid);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  </script>
+
+  <body>
+
 </html>
